@@ -1,4 +1,5 @@
 package co.edu.sena.eventos.rest.auth;
+import co.edu.sena.eventos.jpa.entities.Roles;
 import co.edu.sena.eventos.jpa.entities.Usuarios;
 import co.edu.sena.eventos.jpa.sessions.UsuariosFacade;
 import com.nimbusds.jose.JOSEException;
@@ -46,7 +47,7 @@ public class SecurityFilter implements ContainerRequestFilter, ContainerResponse
 
         if (authHeader == null || authHeader.isEmpty()
                 || !authHeader.startsWith("Bearer ") || authHeader.split(" ").length != 2) {
-            Authorizer authorizer = new Authorizer("")
+            Authorizer authorizer = new Authorizer(new ArrayList<Roles>(), "",
                     originalContext.isSecure());
             requestContext.setSecurityContext(authorizer);
         } else {
@@ -63,10 +64,9 @@ public class SecurityFilter implements ContainerRequestFilter, ContainerResponse
             if (new DateTime(claimSet.getExpirationTime()).isBefore(DateTime.now())) {
                 throw new IOException(EXPIRE_ERROR_MSG);
             } else {
-                Usuarios user = usuarioEJB.find(Integer.parseInt(claimSet.getSubject()));
-                Authorizer authorizer = new Authorizer(user.getNumDocumento()),
-                        originalContext.isSecure());
-                requestContext.setSecurityContext(authorizer);
+                Authorizer authorizer = new Authorizer(new ArrayList<Roles>(), "",
+                    originalContext.isSecure());
+            requestContext.setSecurityContext(authorizer);
             }
         }
 
@@ -81,11 +81,11 @@ public class SecurityFilter implements ContainerRequestFilter, ContainerResponse
 
     public static class Authorizer implements SecurityContext {
 
-        List<Rol> roles;
+        List<Roles> roles;
         String username;
         boolean isSecure;
 
-        public Authorizer(List<Rol> roles, String username, boolean isSecure) {
+        public Authorizer(List<Roles> roles, String username, boolean isSecure) {
             this.roles = roles;
             this.username = username;
             this.isSecure = isSecure;
@@ -98,7 +98,7 @@ public class SecurityFilter implements ContainerRequestFilter, ContainerResponse
 
         @Override
         public boolean isUserInRole(String role) {
-            for (Rol role1 : roles) {
+            for (Roles role1 : roles) {
                 if(role1.getId().equals(role)){
                    return true;
                 }

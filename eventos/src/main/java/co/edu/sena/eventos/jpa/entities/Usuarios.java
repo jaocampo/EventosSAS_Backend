@@ -14,6 +14,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -65,6 +68,13 @@ public class Usuarios implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "password")
     private String password;
+    
+    /*@ManyToMany(mappedBy = "usuariosList")*/
+    @JoinTable(name = "usuarios_has_roles", joinColumns = {
+        @JoinColumn(name = "usuarios_id", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "roles_id", referencedColumnName = "id")})
+    @ManyToMany
+    private List<Roles> rolesList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarios")
     private List<UsuariosHasEventos> usuariosHasEventosList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuariosId")
@@ -123,6 +133,15 @@ public class Usuarios implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @XmlTransient
+    public List<Roles> getRolesList() {
+        return rolesList;
+    }
+
+    public void setRolesList(List<Roles> rolesList) {
+        this.rolesList = rolesList;
     }
 
     @XmlTransient

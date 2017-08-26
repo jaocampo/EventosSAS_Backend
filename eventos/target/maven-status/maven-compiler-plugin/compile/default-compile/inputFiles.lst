@@ -10,6 +10,7 @@
 /home/adsi1261718/Documentos/eventosSAS/backendBD/eventos/src/main/java/co/edu/sena/eventos/rest/auth/AuthUtils.java
 /home/adsi1261718/Documentos/eventosSAS/backendBD/eventos/src/main/java/co/edu/sena/eventos/jpa/sessions/UsuariosFacade.java
 /home/adsi1261718/Documentos/eventosSAS/backendBD/eventos/src/main/java/co/edu/sena/eventos/rest/auth/Token.java
+/home/adsi1261718/Documentos/eventosSAS/backendBD/eventos/src/main/java/co/edu/sena/eventos/jpa/entities/Roles.java
 /home/adsi1261718/Documentos/eventosSAS/backendBD/eventos/src/main/java/co/edu/sena/eventos/jpa/entities/UsuariosHasEventos.java
 /home/adsi1261718/Documentos/eventosSAS/backendBD/eventos/src/main/java/co/edu/sena/eventos/jpa/sessions/EquiposFacade.java
 /home/adsi1261718/Documentos/eventosSAS/backendBD/eventos/src/main/java/co/edu/sena/eventos/jpa/sessions/UsuariosHasEventosFacade.java

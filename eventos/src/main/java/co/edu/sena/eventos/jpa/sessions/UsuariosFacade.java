@@ -6,9 +6,16 @@
 package co.edu.sena.eventos.jpa.sessions;
 
 import co.edu.sena.eventos.jpa.entities.Usuarios;
+import co.edu.sena.eventos.jpa.entities.Usuarios_;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -27,6 +34,23 @@ public class UsuariosFacade extends AbstractFacade<Usuarios> {
 
     public UsuariosFacade() {
         super(Usuarios.class);
+    }
+    
+    public Usuarios findByNumDocumento(String numDocumento){
+        CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Usuarios> cq = cb.createQuery(Usuarios.class);
+        Root<Usuarios> tercero = cq.from(Usuarios.class);
+        
+        cq.where(cb.equal(tercero.get(Usuarios_.numDocumento), numDocumento));
+        TypedQuery<Usuarios> tq = getEntityManager().createQuery(cq);
+        
+        try {
+            return (Usuarios) tq.getSingleResult();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch(NoResultException e){
+            return null;
+        }
     }
     
 }
