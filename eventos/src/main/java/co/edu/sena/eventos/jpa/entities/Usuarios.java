@@ -137,7 +137,7 @@ public class Usuarios implements Serializable {
         this.rolesList = rolesList;
     }
 
-    
+    @XmlTransient
     public List<UsuariosHasEventos> getUsuariosHasEventosList() {
         return usuariosHasEventosList;
     }
