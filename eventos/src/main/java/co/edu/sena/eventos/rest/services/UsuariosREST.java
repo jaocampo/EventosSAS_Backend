@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.edu.sena.eventos.rest.services;
+import co.edu.sena.adsi.rest.auth.DigestUtil;
 import co.edu.sena.eventos.jpa.entities.Usuarios;
 import co.edu.sena.eventos.jpa.sessions.UsuariosFacade;
 import java.util.List;
@@ -42,6 +43,9 @@ public class UsuariosREST {
     
     @POST
     public void create(Usuarios usuarios){
+        usuarios.setPassword(
+                            DigestUtil
+                            .cifrarPassword(usuarios.getPassword()));
         usuariosEJB.create(usuarios);
     }
     
