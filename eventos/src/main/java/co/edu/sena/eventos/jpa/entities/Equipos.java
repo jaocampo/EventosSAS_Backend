@@ -55,7 +55,7 @@ public class Equipos implements Serializable {
     @ManyToMany
     private List<Eventos> eventosList;
     @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = true)
     private Usuarios usuariosId;
 
     public Equipos() {
@@ -86,7 +86,7 @@ public class Equipos implements Serializable {
         this.equipo = equipo;
     }
 
-    @XmlTransient
+    
     public List<Eventos> getEventosList() {
         return eventosList;
     }

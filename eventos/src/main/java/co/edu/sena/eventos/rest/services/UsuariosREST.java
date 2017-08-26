@@ -16,6 +16,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -33,6 +34,12 @@ public class UsuariosREST {
     @GET
     public List<Usuarios> findAll(){
         return usuariosEJB.findAll();
+    }
+    
+    @GET
+    @Path("find")
+    public Usuarios findByNumDocumento(@QueryParam("numDocumento") String numDocumento){
+        return usuariosEJB.findByNumDocumento(numDocumento);
     }
     
     @GET
