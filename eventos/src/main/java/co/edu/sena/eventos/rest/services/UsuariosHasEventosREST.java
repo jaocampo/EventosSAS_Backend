@@ -7,7 +7,6 @@ package co.edu.sena.eventos.rest.services;
 
 import co.edu.sena.eventos.jpa.entities.Eventos;
 import co.edu.sena.eventos.jpa.entities.UsuariosHasEventos;
-import co.edu.sena.eventos.jpa.entities.UsuariosHasEventosPK;
 import co.edu.sena.eventos.jpa.sessions.EventosFacade;
 import co.edu.sena.eventos.jpa.sessions.UsuariosHasEventosFacade;
 import java.util.List;
@@ -40,7 +39,7 @@ public class UsuariosHasEventosREST {
     
     @GET
     @Path("{id}")
-    public UsuariosHasEventos findById(@PathParam("id") String id){
+    public UsuariosHasEventos findById(@PathParam("id") Integer id){
         return usuariosHasEventosEJB.find(id);
     }
     
@@ -51,7 +50,7 @@ public class UsuariosHasEventosREST {
     
     @PUT
     @Path("{id}")
-    public void edit(@PathParam("id") String id, UsuariosHasEventos usuariosHasEventos){
+    public void edit(@PathParam("id") Integer id, UsuariosHasEventos usuariosHasEventos){
         usuariosHasEventosEJB.edit(usuariosHasEventos);
     }
 }

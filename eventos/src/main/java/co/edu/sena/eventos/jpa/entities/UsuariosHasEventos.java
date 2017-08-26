@@ -6,9 +6,12 @@
 package co.edu.sena.eventos.jpa.entities;
 
 import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -25,40 +28,30 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "UsuariosHasEventos.findAll", query = "SELECT u FROM UsuariosHasEventos u")
-    , @NamedQuery(name = "UsuariosHasEventos.findByUsuariosId", query = "SELECT u FROM UsuariosHasEventos u WHERE u.usuariosHasEventosPK.usuariosId = :usuariosId")
-    , @NamedQuery(name = "UsuariosHasEventos.findByEventosId", query = "SELECT u FROM UsuariosHasEventos u WHERE u.usuariosHasEventosPK.eventosId = :eventosId")
-    , @NamedQuery(name = "UsuariosHasEventos.findByAsistio", query = "SELECT u FROM UsuariosHasEventos u WHERE u.asistio = :asistio")})
+    , @NamedQuery(name = "UsuariosHasEventos.findByAsistio", query = "SELECT u FROM UsuariosHasEventos u WHERE u.asistio = :asistio")
+    , @NamedQuery(name = "UsuariosHasEventos.findById", query = "SELECT u FROM UsuariosHasEventos u WHERE u.id = :id")})
 public class UsuariosHasEventos implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected UsuariosHasEventosPK usuariosHasEventosPK;
     @Column(name = "asistio")
     private Boolean asistio;
-    @JoinColumn(name = "eventos_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @JoinColumn(name = "eventos_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Eventos eventos;
-    @JoinColumn(name = "usuarios_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Eventos eventosId;
+    @JoinColumn(name = "usuarios_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
-    private Usuarios usuarios;
+    private Usuarios usuariosId;
 
     public UsuariosHasEventos() {
     }
 
-    public UsuariosHasEventos(UsuariosHasEventosPK usuariosHasEventosPK) {
-        this.usuariosHasEventosPK = usuariosHasEventosPK;
-    }
-
-    public UsuariosHasEventos(int usuariosId, int eventosId) {
-        this.usuariosHasEventosPK = new UsuariosHasEventosPK(usuariosId, eventosId);
-    }
-
-    public UsuariosHasEventosPK getUsuariosHasEventosPK() {
-        return usuariosHasEventosPK;
-    }
-
-    public void setUsuariosHasEventosPK(UsuariosHasEventosPK usuariosHasEventosPK) {
-        this.usuariosHasEventosPK = usuariosHasEventosPK;
+    public UsuariosHasEventos(Integer id) {
+        this.id = id;
     }
 
     public Boolean getAsistio() {
@@ -69,26 +62,34 @@ public class UsuariosHasEventos implements Serializable {
         this.asistio = asistio;
     }
 
-    public Eventos getEventos() {
-        return eventos;
+    public Integer getId() {
+        return id;
     }
 
-    public void setEventos(Eventos eventos) {
-        this.eventos = eventos;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Usuarios getUsuarios() {
-        return usuarios;
+    public Eventos getEventosId() {
+        return eventosId;
     }
 
-    public void setUsuarios(Usuarios usuarios) {
-        this.usuarios = usuarios;
+    public void setEventosId(Eventos eventosId) {
+        this.eventosId = eventosId;
+    }
+
+    public Usuarios getUsuariosId() {
+        return usuariosId;
+    }
+
+    public void setUsuariosId(Usuarios usuariosId) {
+        this.usuariosId = usuariosId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (usuariosHasEventosPK != null ? usuariosHasEventosPK.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -99,7 +100,7 @@ public class UsuariosHasEventos implements Serializable {
             return false;
         }
         UsuariosHasEventos other = (UsuariosHasEventos) object;
-        if ((this.usuariosHasEventosPK == null && other.usuariosHasEventosPK != null) || (this.usuariosHasEventosPK != null && !this.usuariosHasEventosPK.equals(other.usuariosHasEventosPK))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -107,7 +108,7 @@ public class UsuariosHasEventos implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.sena.eventos.jpa.entities.UsuariosHasEventos[ usuariosHasEventosPK=" + usuariosHasEventosPK + " ]";
+        return "co.edu.sena.eventos.jpa.entities.UsuariosHasEventos[ id=" + id + " ]";
     }
     
 }

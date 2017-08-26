@@ -6,18 +6,23 @@
 package co.edu.sena.eventos.jpa.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -67,6 +72,10 @@ public class Eventos implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "codigo")
     private String codigo;
+    @ManyToMany(mappedBy = "eventosList")
+    private List<Equipos> equiposList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "eventosId")
+    private List<UsuariosHasEventos> usuariosHasEventosList;
 
     public Eventos() {
     }
@@ -130,6 +139,24 @@ public class Eventos implements Serializable {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    @XmlTransient
+    public List<Equipos> getEquiposList() {
+        return equiposList;
+    }
+
+    public void setEquiposList(List<Equipos> equiposList) {
+        this.equiposList = equiposList;
+    }
+
+    @XmlTransient
+    public List<UsuariosHasEventos> getUsuariosHasEventosList() {
+        return usuariosHasEventosList;
+    }
+
+    public void setUsuariosHasEventosList(List<UsuariosHasEventos> usuariosHasEventosList) {
+        this.usuariosHasEventosList = usuariosHasEventosList;
     }
 
     @Override

@@ -45,11 +45,10 @@ public class Roles implements Serializable {
     @Size(max = 45)
     @Column(name = "descripcion")
     private String descripcion;
-    /*@JoinTable(name = "usuarios_has_roles", joinColumns = {
+    @JoinTable(name = "usuarios_has_roles", joinColumns = {
         @JoinColumn(name = "roles_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "usuarios_id", referencedColumnName = "id")})
-    @ManyToMany*/
-    @ManyToMany(mappedBy = "rolesList")
+    @ManyToMany
     private List<Usuarios> usuariosList;
 
     public Roles() {
